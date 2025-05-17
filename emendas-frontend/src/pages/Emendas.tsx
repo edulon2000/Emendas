@@ -1,16 +1,26 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import EmendaTable from "@/components/EmendaTable"
-import { emendasMock, Emenda } from "@/data/emendas"
+import { Emenda } from "@/data/emendas"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
-import { deleteEmenda } from "@/services/emendaService"
+import { deleteEmenda, getEmendas } from "@/services/emendaService"
 
 export default function Emendas() {
   const [filtro, setFiltro] = useState("")
-  const [emendas, setEmendas] = useState<Emenda[]>(emendasMock)
+  const [emendas, setEmendas] = useState<Emenda[]>([])
   const navigate = useNavigate();
-
+useEffect(() => {
+    async function fetchEmendas() {
+      try {
+        const data = await getEmendas();
+        setEmendas(data);
+      } catch (error) {
+        console.error("Erro ao carregar emendas:", error);
+      }
+    }
+    fetchEmendas();
+  }, []);
 
   const emendasFiltradas = emendas.filter((e) =>
     e.descricao.toLowerCase().includes(filtro.toLowerCase()) ||

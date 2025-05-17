@@ -9,11 +9,25 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts"
-interface Props {
-  emendas: Emenda[]
-}
+import { useEffect, useState } from "react";
+import { deleteEmenda, getEmendas } from "@/services/emendaService";
 
-export default function Dashboard({ emendas }: Props) {
+
+export default function Dashboard() {
+
+  const [emendas, setEmendas] = useState<Emenda[]>([]);
+
+  useEffect(() => {
+    async function fetchEmendas() {
+      try {
+        const data = await getEmendas();
+        setEmendas(data);
+      } catch (error) {
+        console.error("Erro ao carregar emendas", error);
+      }
+    }
+    fetchEmendas();
+  }, []);
   const total = emendas.length
   const emExecucao = emendas.filter((e) => e.status === 1).length
   const emAnalise = emendas.filter((e) => e.status === 0).length
@@ -28,6 +42,12 @@ export default function Dashboard({ emendas }: Props) {
     ano,
     total,
   }))
+  async function handleDelete(id: number) {
+  if (window.confirm("Tem certeza que deseja excluir essa emenda?")) {
+    await deleteEmenda(id); // função que chama o backend
+    setEmendas((prev) => prev.filter((e) => e.id !== id)); // atualiza a lista
+  }
+}
 
   return (
     <main className="flex-1 p-10 bg-[#f8f9fc] min-h-screen">
@@ -77,7 +97,7 @@ export default function Dashboard({ emendas }: Props) {
         <EmendaTable
           emendas={emendas}
           onEdit={(id) => console.log("Editar", id)}
-          onDelete={(id) => console.log("Excluir", id)}
+          onDelete={handleDelete}
         />
       </div>
     </main>
