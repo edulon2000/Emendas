@@ -1,18 +1,43 @@
 import EmendaForm from "@/components/EmendaForm";
 import { useParams, useNavigate } from "react-router-dom";
-import { Emenda, emendasMock } from "@/data/emendas";
+import { Emenda } from "@/data/emendas";
+import { useEffect, useState } from "react";
+import { getEmendaById, updateEmenda } from "@/services/emendaService";
 
 export default function EditarEmenda() {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const emenda = emendasMock.find((e) => e.id === Number(id));
+  const [emenda, setEmenda] = useState<Emenda | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error] = useState<string | null>(null);
 
+  useEffect(() => {
+    async function fetchEmenda() {
+      if (!id) return;
+      try {
+        setLoading(true);
+        const data = await getEmendaById(Number(id));
+        setEmenda(data);
+      } catch (err) {console.error(err);
+  alert("Erro ao atualizar a emenda.");
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchEmenda();
+  }, [id]);
+
+  if (loading) return <div>Carregando...</div>;
+  if (error) return <div>{error}</div>;
   if (!emenda) return <div>Emenda não encontrada</div>;
 
-  const handleSubmit = (data: Emenda) => {
-    // Atualiza a emenda via API ou estado
-    console.log("Editar emenda:", data);
-    navigate("/emendas");
+  const handleSubmit = async (data: Emenda) => {
+    try {
+      await updateEmenda(data.id, data); // Atualiza via API
+      navigate("/emendas");
+    } catch (err) {console.error(err);
+  alert("Erro ao atualizar a emenda.");
+    }
   };
 
   return (

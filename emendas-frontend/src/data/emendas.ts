@@ -1,32 +1,218 @@
+import { StatusEmenda } from "@/enums/statusEmenda"
+export type Status = 0 | 1 | 2
+
 export interface Emenda {
-    id: number
-    autor: string
-    descricao: string
-    valor: number
-    status: string
-  }
-  
-  export const emendasMock: Emenda[] = [
-    {
-      id: 1,
-      autor: "João da Silva",
-      descricao: "Construção de escola municipal",
-      valor: 500000,
-      status: "Aprovada",
-    },
-    {
-      id: 2,
-      autor: "Maria Oliveira",
-      descricao: "Reforma de posto de saúde",
-      valor: 250000,
-      status: "Pendente",
-    },
-    {
-      id: 3,
-      autor: "Carlos Souza",
-      descricao: "Asfaltamento de vias públicas",
-      valor: 800000,
-      status: "Rejeitada",
-    },
-  ]
-  
+  id?: number
+  autor: string
+  descricao: string
+  valor: number
+  status: Status
+  objetivo: string
+  municipio: string
+  data: string
+}
+
+export const emendasMock: Emenda[] = [
+ {
+    id: 1,
+    autor: "João da Silva",
+    descricao: "Construção de escola municipal",
+    valor: 500000,
+    status: StatusEmenda.EmExecucao,
+    objetivo: "Expandir a rede de ensino básico",
+    municipio: "Fortaleza",
+    data: "2015-03-10",
+  },
+  {
+    id: 2,
+    autor: "Maria Oliveira",
+    descricao: "Reforma do hospital central",
+    valor: 1200000,
+    status: StatusEmenda.EmExecucao,
+    objetivo: "Melhorar a infraestrutura hospitalar",
+    municipio: "Juazeiro do Norte",
+    data: "2016-07-22",
+  },
+  {
+    id: 3,
+    autor: "Carlos Souza",
+    descricao: "Saneamento básico em bairros periféricos",
+    valor: 800000,
+    status: StatusEmenda.EmAnalise,
+    objetivo: "Garantir condições sanitárias adequadas",
+    municipio: "Crato",
+    data: "2017-05-14",
+  },
+  {
+    id: 4,
+    autor: "Ana Paula",
+    descricao: "Construção de unidade de saúde da família",
+    valor: 350000,
+    status: StatusEmenda.EmExecucao,
+    objetivo: "Aumentar cobertura da atenção primária",
+    municipio: "Iguatu",
+    data: "2018-09-01",
+  },
+  {
+    id: 5,
+    autor: "Fernando Lima",
+    descricao: "Revitalização de praça pública",
+    valor: 150000,
+    status: StatusEmenda.EmExecucao,
+    objetivo: "Melhorar o lazer e segurança",
+    municipio: "Quixeramobim",
+    data: "2019-11-20",
+  },
+  {
+    id: 6,
+    autor: "Juliana Castro",
+    descricao: "Aquisição de ônibus escolar",
+    valor: 290000,
+    status: StatusEmenda.EmAnalise,
+    objetivo: "Facilitar o transporte de estudantes",
+    municipio: "Canindé",
+    data: "2020-02-05",
+  },
+  {
+    id: 7,
+    autor: "Ricardo Mendes",
+    descricao: "Pavimentação de estradas vicinais",
+    valor: 1100000,
+    status: StatusEmenda.EmExecucao,
+    objetivo: "Melhorar o escoamento da produção rural",
+    municipio: "Sobral",
+    data: "2021-06-30",
+  },
+  {
+    id: 8,
+    autor: "Larissa Barros",
+    descricao: "Iluminação pública com LED",
+    valor: 220000,
+    status: StatusEmenda.EmAnalise,
+    objetivo: "Reduzir custos de energia",
+    municipio: "Crateús",
+    data: "2022-04-18",
+  },
+  {
+    id: 9,
+    autor: "Eduardo Maia",
+    descricao: "Capacitação de agentes comunitários",
+    valor: 95000,
+    status: StatusEmenda.EmExecucao,
+    objetivo: "Qualificar o atendimento à população",
+    municipio: "Russas",
+    data: "2023-08-11",
+  },
+  {
+    id: 10,
+    autor: "Beatriz Nogueira",
+    descricao: "Instalação de internet nas escolas",
+    valor: 400000,
+    status: StatusEmenda.EmExecucao,
+    objetivo: "Melhorar o acesso à informação",
+    municipio: "Maracanaú",
+    data: "2024-03-02",
+  },
+  {
+    id: 11,
+    autor: "José Carvalho",
+    descricao: "Construção de biblioteca comunitária",
+    valor: 200000,
+    status: StatusEmenda.EmExecucao,
+    objetivo: "Incentivar a leitura e a cultura",
+    municipio: "Limoeiro do Norte",
+    data: "2016-10-12",
+  },
+  {
+    id: 12,
+    autor: "Tatiane Lopes",
+    descricao: "Aquisição de equipamentos agrícolas",
+    valor: 630000,
+    status: StatusEmenda.EmAnalise,
+    objetivo: "Fortalecer agricultura familiar",
+    municipio: "Tianguá",
+    data: "2018-03-08",
+  },
+  {
+    id: 13,
+    autor: "Paulo Dantas",
+    descricao: "Sistema de monitoramento urbano",
+    valor: 480000,
+    status: StatusEmenda.EmExecucao,
+    objetivo: "Aumentar a segurança pública",
+    municipio: "Itapipoca",
+    data: "2019-12-22",
+  },
+  {
+    id: 14,
+    autor: "Roberta Soares",
+    descricao: "Campanha de prevenção à dengue",
+    valor: 130000,
+    status: StatusEmenda.EmExecucao,
+    objetivo: "Reduzir os focos do mosquito transmissor",
+    municipio: "Aracati",
+    data: "2020-01-10",
+  },
+  {
+    id: 15,
+    autor: "Daniel Ferreira",
+    descricao: "Centro de reabilitação física",
+    valor: 900000,
+    status: StatusEmenda.EmExecucao,
+    objetivo: "Atender pacientes com necessidades especiais",
+    municipio: "Horizonte",
+    data: "2021-07-25",
+  },
+  {
+    id: 16,
+    autor: "Lúcia Matos",
+    descricao: "Construção de quadra poliesportiva",
+    valor: 320000,
+    status: StatusEmenda.EmAnalise,
+    objetivo: "Promover atividades esportivas para jovens",
+    municipio: "Maranguape",
+    data: "2022-11-05",
+  },
+  {
+    id: 17,
+    autor: "Marcos Vinícius",
+    descricao: "Implantação de sistema de coleta seletiva",
+    valor: 400000,
+    status: StatusEmenda.EmExecucao,
+    objetivo: "Melhorar gestão de resíduos sólidos",
+    municipio: "Sobral",
+    data: "2023-02-14",
+  },
+  {
+    id: 18,
+    autor: "Fernanda Almeida",
+    descricao: "Capacitação para professores do ensino médio",
+    valor: 150000,
+    status: StatusEmenda.EmExecucao,
+    objetivo: "Melhorar qualidade do ensino",
+    municipio: "Quixadá",
+    data: "2023-06-30",
+  },
+  {
+    id: 19,
+    autor: "Eduardo Tavares",
+    descricao: "Ampliação do sistema de abastecimento de água",
+    valor: 750000,
+    status: StatusEmenda.EmAnalise,
+    objetivo: "Garantir acesso à água potável",
+    municipio: "Irauçuba",
+    data: "2024-01-20",
+  },
+  {
+    id: 20,
+    autor: "Aline Correia",
+    descricao: "Programa de inclusão digital para idosos",
+    valor: 180000,
+    status: StatusEmenda.EmExecucao,
+    objetivo: "Reduzir exclusão digital",
+    municipio: "Canindé",
+    data: "2024-04-12",
+  },
+]
+
+export default emendasMock

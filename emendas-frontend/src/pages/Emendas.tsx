@@ -4,6 +4,7 @@ import { emendasMock, Emenda } from "@/data/emendas"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
+import { deleteEmenda } from "@/services/emendaService"
 
 export default function Emendas() {
   const [filtro, setFiltro] = useState("")
@@ -16,10 +17,11 @@ export default function Emendas() {
     e.autor.toLowerCase().includes(filtro.toLowerCase())
   )
 
-  const handleDelete = (id: number) => {
-    const confirm = window.confirm("Tem certeza que deseja excluir?")
-    if (confirm) {
-      setEmendas((prev) => prev.filter((e) => e.id !== id))
+  async function handleDelete(id: number) {
+    if (window.confirm("Tem certeza que deseja excluir essa emenda?")) {
+      await deleteEmenda(id)
+      // Atualiza lista removendo a emenda deletada
+      setEmendas(prev => prev.filter(emenda => emenda.id !== id))
     }
   }
 

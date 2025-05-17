@@ -1,10 +1,14 @@
 package com.emendas.emendas.controller;
 
+import com.emendas.emendas.dto.EmendaDTO;
+import com.emendas.emendas.mapper.EmendaMapper;
 import com.emendas.emendas.model.Emenda;
 import com.emendas.emendas.service.EmendaService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/emendas")
@@ -18,18 +22,23 @@ public class EmendaController {
     }
 
     @GetMapping
-    public List<Emenda> listar() {
-        return service.listarTodas();
+    public List<EmendaDTO> listar() {
+        return service.listarTodas()
+                .stream()
+                .map(EmendaMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @PostMapping
-    public Emenda criar(@RequestBody Emenda emenda) {
-        return service.salvar(emenda);
+    public EmendaDTO criar(@Valid @RequestBody EmendaDTO dto) {
+        Emenda emenda = EmendaMapper.toEntity(dto);
+        return EmendaMapper.toDTO(service.salvar(emenda));
     }
 
     @PutMapping("/{id}")
-    public Emenda atualizar(@PathVariable Long id, @RequestBody Emenda emenda) {
-        return service.atualizar(id, emenda);
+    public EmendaDTO atualizar(@PathVariable Long id, @Valid @RequestBody EmendaDTO dto) {
+        EmendaDTO atualizada = service.atualizar(id, EmendaMapper.toEntity(dto));
+        return EmendaMapper.toDTO(atualizada);
     }
 
     @DeleteMapping("/{id}")

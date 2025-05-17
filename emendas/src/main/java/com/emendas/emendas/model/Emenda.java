@@ -1,5 +1,6 @@
 package com.emendas.emendas.model;
 
+import com.emendas.emendas.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,10 +20,13 @@ public class Emenda {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String titulo;
-    private String descricao;
+    private String numero;
     private String autor;
+    private String descricao;
     private double valor;
+    @Enumerated(EnumType.STRING) // ou ORDINAL, veja observação abaixo
+    private Status status;
+    private String objetivo;
+    private String municipio;
     private LocalDate data;
-    private String status;
 }
