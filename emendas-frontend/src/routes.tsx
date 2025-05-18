@@ -5,6 +5,7 @@ import NovaEmenda from "./pages/NovaEmenda";
 import EditarEmenda from "./pages/EditarEmenda";
 import NotFound from "./pages/NotFound";
 import Sidebar from "@/components/Sidebar"
+import DetalharEmenda from "./pages/DetalharEmenda";
 
 
 
@@ -19,6 +20,7 @@ export default function AppRoutes() {
         <Route path="/emendas" element={<Emendas />} />
         <Route path="/emendas/novo" element={<NovaEmenda />} />
         <Route path="/emendas/:id/editar" element={<EditarEmenda />} />
+        <Route path="/emendas/:id" element={<DetalharEmenda />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
        </main>

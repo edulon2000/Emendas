@@ -57,7 +57,9 @@ const emRejeitada = emendas.filter(e => e.status === StatusEmenda.Rejeitada).len
 function handleEdit(id: number) {
   navigate(`/emendas/${id}/editar`);
 }
-
+function handleDetail(id: number) {
+  navigate(`/emendas/${id}`);
+}
   return (
     <main className="flex-1 p-10 bg-[#f8f9fc] min-h-screen">
       <div className="mb-8">
@@ -108,6 +110,7 @@ function handleEdit(id: number) {
           emendas={emendas}
           onEdit={handleEdit}
           onDelete={handleDelete}
+          onDetail={handleDetail} 
         />
       </div>
     </main>

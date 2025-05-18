@@ -8,6 +8,8 @@ interface Props {
   emendas: Emenda[]
   onEdit: (id: number) => void
   onDelete: (id: number) => void
+  onDetail: (id: number) => void
+
 }
 
 function getStatusLabel(status: StatusEmenda): { label: string; colorClass: string } {
@@ -24,7 +26,7 @@ function getStatusLabel(status: StatusEmenda): { label: string; colorClass: stri
 }
 
 
-export default function EmendaTable({ emendas, onEdit, onDelete }: Props) {
+export default function EmendaTable({ emendas, onEdit, onDelete, onDetail  }: Props) {
   const [statusFilter, setStatusFilter] = useState<StatusEmenda | "">("")
   const [municipioFilter, setMunicipioFilter] = useState<string>("")
 
@@ -147,6 +149,9 @@ export default function EmendaTable({ emendas, onEdit, onDelete }: Props) {
                   <td className="py-3 px-4 text-center">{new Date(emenda.data).toLocaleDateString("pt-BR")}</td>
                   <td className="py-3 px-4 text-center">
                     <div className="flex justify-center gap-2">
+                      <Button size="sm" variant="outline" onClick={() => onDetail(emenda.id)}>
+                        Detalhar
+                      </Button>
                       <Button size="sm" variant="outline" onClick={() => onEdit(emenda.id)}>
                         Editar
                       </Button>

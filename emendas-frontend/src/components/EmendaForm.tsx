@@ -18,7 +18,7 @@ export default function EmendaForm({ initialData = {}, onSubmit }: Props) {
   const [numero, setNumero] = useState(initialData.numero || "");
   const [autor, setAutor] = useState(initialData.autor || "");
   const [descricao, setDescricao] = useState(initialData.descricao || "");
-  const [valor, setValor] = useState(initialData.valor?.toFixed(2) || "0.00");
+  const [valor, setValor] = useState(initialData.valor !== undefined? formatarValorBR(initialData.valor): "0,00");
   const [status, setStatus] = useState<StatusEmenda>(initialData.status ?? StatusEmenda.Pendente);
   const [municipio, setMunicipio] = useState(initialData.municipio || "");
   const [data, setData] = useState(initialData.data || "");
@@ -35,12 +35,40 @@ export default function EmendaForm({ initialData = {}, onSubmit }: Props) {
       numero,
       autor,
       descricao,
-      valor: parseFloat(valor.replace(",", ".")),
+      valor: parseFloat(valor.replace(/\./g, "").replace(",", ".")),
       status,
       municipio,
       data,
     });
   };
+  function formatarValorBR(valor: number): string {
+  return valor.toLocaleString("pt-BR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+}
+
+  function formatarValorMoeda(valor: string) {
+  // Remove tudo que não seja número
+  let num = valor.replace(/\D/g, "");
+
+  // Se não tiver nada, retorna vazio
+  num = num.replace(/^0+/, "") || "0";
+
+  // Se tiver 1 ou 2 dígitos, adiciona zeros para casas decimais
+  while (num.length < 3) {
+    num = "0" + num;
+  }
+
+  // Pega parte inteira e decimal
+  const inteiro = num.slice(0, -2);
+  const decimal = num.slice(-2);
+
+  // Formata com pontos a cada 3 dígitos da parte inteira
+  const inteiroFormatado = inteiro.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+  return `${inteiroFormatado},${decimal}`;
+}
 
   return (
     <motion.div
@@ -56,7 +84,12 @@ export default function EmendaForm({ initialData = {}, onSubmit }: Props) {
               <Input
                 id="numero"
                 value={numero}
-                onChange={(e) => setNumero(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  // Só aceita números, remove qualquer coisa que não seja dígito
+                  const numericValue = value.replace(/\D/g, "");
+                  setNumero(numericValue);
+                }}
                 required
               />
             </div>
@@ -88,10 +121,12 @@ export default function EmendaForm({ initialData = {}, onSubmit }: Props) {
                 type="text"
                 inputMode="decimal"
                 value={valor}
-                onChange={(e) =>
-                  setValor(e.target.value.replace(/[^\d,.]/g, ""))
-                }
-                placeholder="Ex: 100000,00"
+                 onChange={(e) => {
+                  const raw = e.target.value;
+                  const formatted = formatarValorMoeda(raw);
+                  setValor(formatted);
+                }}
+                placeholder="Ex: 100.000,00"
                 required
               />
             </div>

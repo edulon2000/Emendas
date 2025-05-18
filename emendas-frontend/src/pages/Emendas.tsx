@@ -35,6 +35,10 @@ useEffect(() => {
     }
   }
 
+function handleDetail(id: number) {
+  navigate(`/emendas/${id}`);
+}
+
   function handleEdit(id: number) {
   navigate(`/emendas/${id}/editar`);
 }
@@ -59,6 +63,8 @@ useEffect(() => {
         emendas={emendasFiltradas}
         onDelete={handleDelete}
         onEdit={handleEdit}
+        onDetail={handleDetail}
+
       />
     </div>
   )
