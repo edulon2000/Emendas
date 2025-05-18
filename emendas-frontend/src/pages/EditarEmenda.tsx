@@ -27,14 +27,22 @@ export default function EditarEmenda() {
   }, [id]);
 
   const handleSubmit = async (data: Emenda) => {
-    try {
-      await updateEmenda(data.id, data);
-      navigate("/emendas");
-    } catch (err) {
-      console.error(err);
-      alert("Erro ao atualizar a emenda.");
-    }
-  };
+  try {
+    // Usa o id da URL (do useParams) que você já tem
+    const idNum = Number(id);
+    if (isNaN(idNum)) throw new Error("ID inválido");
+
+    // Garante que o objeto enviado tem o id correto
+    const dataToSend = { ...data, id: idNum };
+
+    await updateEmenda(idNum, dataToSend);
+    navigate("/emendas");
+  } catch (err) {
+    console.error(err);
+    alert("Erro ao atualizar a emenda.");
+  }
+};
+
 
   if (loading) return <div>Carregando...</div>;
   if (error) return <div>{error}</div>;

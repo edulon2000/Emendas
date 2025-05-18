@@ -11,9 +11,12 @@ import {
 } from "recharts"
 import { useEffect, useState } from "react";
 import { deleteEmenda, getEmendas } from "@/services/emendaService";
+import { StatusEmenda } from "@/enums/statusEmenda";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Dashboard() {
+    const navigate = useNavigate();
 
   const [emendas, setEmendas] = useState<Emenda[]>([]);
 
@@ -28,10 +31,13 @@ export default function Dashboard() {
     }
     fetchEmendas();
   }, []);
-  const total = emendas.length
-  const emExecucao = emendas.filter((e) => e.status === 1).length
-  const emAnalise = emendas.filter((e) => e.status === 0).length
+  const total = emendas.length;
 
+const emPendente = emendas.filter(e => e.status === StatusEmenda.Pendente).length;
+
+const emAprovada = emendas.filter(e => e.status === StatusEmenda.Aprovada).length;
+
+const emRejeitada = emendas.filter(e => e.status === StatusEmenda.Rejeitada).length;
   const emendasPorAno = emendas.reduce((acc, emenda) => {
     const ano = new Date(emenda.data).getFullYear()
     acc[ano] = (acc[ano] || 0) + 1
@@ -48,6 +54,9 @@ export default function Dashboard() {
     setEmendas((prev) => prev.filter((e) => e.id !== id)); // atualiza a lista
   }
 }
+function handleEdit(id: number) {
+  navigate(`/emendas/${id}/editar`);
+}
 
   return (
     <main className="flex-1 p-10 bg-[#f8f9fc] min-h-screen">
@@ -59,8 +68,9 @@ export default function Dashboard() {
       <section className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
         {[
           { label: "Emendas", value: total },
-          { label: "Em Execução", value: emExecucao },
-          { label: "Em Análise", value: emAnalise },
+          { label: "Pendente", value: emPendente },
+          { label: "Aprovada", value: emAprovada },
+          { label: "Rejeitada", value: emRejeitada },
         ].map(({ label, value }, i) => (
           <motion.div
             key={label}
@@ -96,7 +106,7 @@ export default function Dashboard() {
         <h2 className="text-lg font-semibold text-gray-800 mb-4">Últimas Emendas</h2>
         <EmendaTable
           emendas={emendas}
-          onEdit={(id) => console.log("Editar", id)}
+          onEdit={handleEdit}
           onDelete={handleDelete}
         />
       </div>
