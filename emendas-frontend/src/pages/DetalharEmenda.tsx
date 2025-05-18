@@ -56,7 +56,7 @@ export default function DetalharEmenda() {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="max-w-4xl mx-auto px-6 py-12"
+      className="min-h-screen flex flex-col"
     >
       <Card className="border border-gray-200 shadow-lg">
         <CardContent className="p-8 space-y-6">

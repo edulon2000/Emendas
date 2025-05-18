@@ -4,6 +4,8 @@ import { Emenda } from "@/data/emendas";
 import { useNavigate } from "react-router-dom";
 import { createEmenda } from '@/services/emendaService';
 import { toast } from 'sonner'; 
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
 
 export default function NovaEmenda() {
   const navigate = useNavigate();
@@ -23,9 +25,19 @@ export default function NovaEmenda() {
 
   return (
     <div className="max-w-xl mx-auto mt-8">
-      <h1 className="text-xl font-bold mb-4">Nova Emenda</h1>
-      {}
-      <EmendaForm onSubmit={handleSubmit} />
-    </div>
+  <div className="flex items-center justify-between mb-4">
+    <h1 className="text-xl font-bold">Nova Emenda</h1>
+    <Button
+      onClick={() => navigate("/emendas")}
+      variant="ghost"
+      className="text-sm text-gray-600 hover:text-gray-900"
+    >
+      <ArrowLeft className="w-4 h-4 mr-1" />
+      Voltar
+    </Button>
+  </div>
+  <EmendaForm onSubmit={handleSubmit} />
+</div>
+
   );
 }

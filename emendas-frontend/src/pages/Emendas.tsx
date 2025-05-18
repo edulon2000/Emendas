@@ -44,7 +44,7 @@ function handleDetail(id: number) {
 }
 
   return (
-    <div className="p-8 space-y-4">
+    <div className="min-h-screen flex flex-col">
       <h1 className="text-3xl font-bold">Gerenciador de Emendas</h1>
 
       <div className="flex gap-4 items-center">
