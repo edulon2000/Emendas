@@ -30,6 +30,5 @@ public class Emenda {
     @Enumerated(EnumType.STRING) // ou ORDINAL, veja observação abaixo
     private Status status;
     private String municipio;
-    @PastOrPresent
     private LocalDate data;
 }
