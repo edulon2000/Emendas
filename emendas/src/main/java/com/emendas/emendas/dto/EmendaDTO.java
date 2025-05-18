@@ -33,10 +33,6 @@ public class EmendaDTO {
     @NotNull(message = "Status é obrigatório")
     private Status status;
 
-
-    @NotBlank(message = "Objetivo é obrigatório")
-    private String objetivo;
-
     @NotBlank(message = "Município é obrigatório")
     private String municipio;
 

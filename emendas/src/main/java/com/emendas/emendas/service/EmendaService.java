@@ -43,7 +43,6 @@ public class EmendaService {
             emenda.setDescricao(novaEmendaDTO.getDescricao());
             emenda.setValor(novaEmendaDTO.getValor());
             emenda.setStatus(novaEmendaDTO.getStatus());
-            emenda.setObjetivo(novaEmendaDTO.getObjetivo());
             emenda.setMunicipio(novaEmendaDTO.getMunicipio());
             emenda.setData(novaEmendaDTO.getData());
             Emenda atualizado = repository.save(emenda);
@@ -64,7 +63,6 @@ public class EmendaService {
                 .descricao(dto.getDescricao())
                 .valor(dto.getValor())
                 .status(dto.getStatus())
-                .objetivo(dto.getObjetivo())
                 .municipio(dto.getMunicipio())
                 .data(dto.getData())
                 .build();
@@ -79,7 +77,6 @@ public class EmendaService {
                 .descricao(emenda.getDescricao())
                 .valor(emenda.getValor())
                 .status(emenda.getStatus())
-                .objetivo(emenda.getObjetivo())
                 .municipio(emenda.getMunicipio())
                 .data(emenda.getData())
                 .build();

@@ -5,6 +5,7 @@ import com.emendas.emendas.mapper.EmendaMapper;
 import com.emendas.emendas.model.Emenda;
 import com.emendas.emendas.service.EmendaService;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +29,13 @@ public class EmendaController {
                 .map(EmendaMapper::toDTO)
                 .collect(Collectors.toList());
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<EmendaDTO> buscarPorId(@PathVariable Long id) {
+        return service.buscarPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
 
     @PostMapping
     public EmendaDTO criar(@Valid @RequestBody EmendaDTO dto) {

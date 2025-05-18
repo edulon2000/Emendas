@@ -26,7 +26,6 @@ public class Emenda {
     private double valor;
     @Enumerated(EnumType.STRING) // ou ORDINAL, veja observação abaixo
     private Status status;
-    private String objetivo;
     private String municipio;
     private LocalDate data;
 }

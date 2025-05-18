@@ -13,7 +13,6 @@ public class EmendaMapper {
         dto.setDescricao(emenda.getDescricao());
         dto.setValor(emenda.getValor());
         dto.setStatus(emenda.getStatus());
-        dto.setObjetivo(emenda.getObjetivo());
         dto.setMunicipio(emenda.getMunicipio());
         dto.setData(emenda.getData());
         return dto;
@@ -27,7 +26,6 @@ public class EmendaMapper {
         emenda.setDescricao(dto.getDescricao());
         emenda.setValor(dto.getValor());
         emenda.setStatus(dto.getStatus());
-        emenda.setObjetivo(dto.getObjetivo());
         emenda.setMunicipio(dto.getMunicipio());
         emenda.setData(dto.getData());
         return emenda;

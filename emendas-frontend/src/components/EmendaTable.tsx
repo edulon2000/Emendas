@@ -12,26 +12,28 @@ interface Props {
 
 function getStatusLabel(status: StatusEmenda): { label: string; colorClass: string } {
   switch (status) {
-    case StatusEmenda.EmAnalise:
-      return { label: "Em Análise", colorClass: "text-yellow-700 bg-yellow-100" }
-    case StatusEmenda.EmExecucao:
-      return { label: "Em Execução", colorClass: "text-blue-700 bg-blue-100" }
-    case StatusEmenda.Aprovado:
-      return { label: "Aprovado", colorClass: "text-green-700 bg-green-100" }
+    case StatusEmenda.Pendente:
+      return { label: "Pendente", colorClass: "text-yellow-700 bg-yellow-100" }
+    case StatusEmenda.Rejeitada:
+      return { label: "Rejeitada", colorClass: "text-blue-700 bg-blue-100" }
+    case StatusEmenda.Aprovada:
+      return { label: "Aprovada", colorClass: "text-green-700 bg-green-100" }
     default:
       return { label: "Desconhecido", colorClass: "text-gray-700 bg-gray-100" }
   }
 }
+
 
 export default function EmendaTable({ emendas, onEdit, onDelete }: Props) {
   const [statusFilter, setStatusFilter] = useState<StatusEmenda | "">("")
   const [municipioFilter, setMunicipioFilter] = useState<string>("")
 
   // opções únicas de status presentes nos dados para filtro
-  const statusOptions = useMemo(() => {
-    const uniqueStatus = Array.from(new Set(emendas.map(e => e.status)))
-    return uniqueStatus.sort((a, b) => a - b) // ordenar numericamente
-  }, [emendas])
+  const statusOptions = useMemo<StatusEmenda[]>(() => {
+  const uniqueStatus = Array.from(new Set(emendas.map(e => e.status)))
+  return uniqueStatus.sort((a, b) => a.localeCompare(b))
+}, [emendas])
+
 
   // opções únicas de municípios presentes nos dados para filtro
   const municipioOptions = useMemo(() => {
@@ -60,7 +62,7 @@ export default function EmendaTable({ emendas, onEdit, onDelete }: Props) {
             <select
               id="statusFilter"
               value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value === "" ? "" : Number(e.target.value))}
+              onChange={(e) => setStatusFilter(e.target.value as StatusEmenda)}
               className="border border-gray-300 rounded px-3 py-2"
             >
               <option value="">Todos</option>
@@ -101,7 +103,6 @@ export default function EmendaTable({ emendas, onEdit, onDelete }: Props) {
             <tr className="bg-gray-100 border-b border-gray-300">
               <th className="py-3 px-4">Autor</th>
               <th className="py-3 px-4">Descrição</th>
-              <th className="py-3 px-4">Objetivo</th>
               <th className="py-3 px-4">Município</th>
               <th className="py-3 px-4">Valor (R$)</th>
               <th className="py-3 px-4">Status</th>
@@ -127,9 +128,6 @@ export default function EmendaTable({ emendas, onEdit, onDelete }: Props) {
                   <td className="py-3 px-4">{emenda.autor}</td>
                   <td className="py-3 px-4 max-w-xs truncate" title={emenda.descricao}>
                     {emenda.descricao}
-                  </td>
-                  <td className="py-3 px-4 max-w-xs truncate" title={emenda.objetivo}>
-                    {emenda.objetivo}
                   </td>
                   <td className="py-3 px-4">{emenda.municipio}</td>
                   <td className="py-3 px-4 font-mono">

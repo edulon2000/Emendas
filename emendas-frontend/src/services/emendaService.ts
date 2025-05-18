@@ -21,7 +21,7 @@ export async function deleteEmenda(id: number): Promise<void> {
 }
 
 export async function getEmendaById(id: number): Promise<Emenda> {
-  const response = await fetch(`/api/emendas/${id}`);
+  const response = await fetch(`/emendas/${id}`);
   if (!response.ok) throw new Error("Erro ao buscar emenda");
   return response.json();
 }

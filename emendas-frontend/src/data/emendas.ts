@@ -1,3 +1,5 @@
+import { StatusEmenda } from "@/enums/statusEmenda"
+
 export type Status = 0 | 1 | 2
 
 export interface Emenda {
@@ -6,8 +8,7 @@ export interface Emenda {
   autor: string
   descricao: string
   valor: number
-  status: Status
-  objetivo: string
+  status: StatusEmenda
   municipio: string
   data: string // yyyy-MM-dd
 }
