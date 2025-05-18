@@ -11,7 +11,7 @@ import { StatusEmenda } from "@/enums/statusEmenda";
 
 interface Props {
   initialData?: Partial<Emenda>;
-  onSubmit: (data: Omit<Emenda, "id">) => void;
+  onSubmit: (data: Emenda) => void;
 }
 
 export default function EmendaForm({ initialData = {}, onSubmit }: Props) {
@@ -32,6 +32,7 @@ export default function EmendaForm({ initialData = {}, onSubmit }: Props) {
     }
 
     onSubmit({
+      id: initialData.id!, // Se quiser garantir que existe
       numero,
       autor,
       descricao,

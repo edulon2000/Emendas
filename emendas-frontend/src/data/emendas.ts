@@ -3,7 +3,7 @@ import { StatusEmenda } from "@/enums/statusEmenda"
 export type Status = 0 | 1 | 2
 
 export interface Emenda {
-  id?: number
+  id: number
   numero: string
   autor: string
   descricao: string
